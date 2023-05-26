@@ -7,6 +7,7 @@ import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Form from './components/Form/Form';
 import Detail from './components/Detail/Detail';
+import Favorites from './components/Favorites/Favorites';
 
 const EMAIL = "luciomorales@gmail.com"
 const PASSWORD = "asd12345"
@@ -28,10 +29,10 @@ function App() {
 
    useEffect(() => {
       !access && navigate('/');
-   }, [access]); // esto es para que el usuario no pueda acceder via url. Lo obliga a escribir un email y una password.
+   }, [access, navigate]); // esto es para que el usuario no pueda acceder via url. Lo obliga a escribir un email y una password.
 
    const onSearch = (id) => { 
-axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
+axios(`http://localhost:3001/rickandmorty/character/${id}`).then(({ data }) => {
       if (data.name) {
          setCharacters((oldChars) => [...oldChars, data]);
       } else {
@@ -53,6 +54,7 @@ const onClose = (id) =>{
             <Route path='/home'element={<Cards characters={characters} onClose={onClose} />}/>
             <Route path='/about'element={<About/>}/>
             <Route path='/detail/:id'element={<Detail/>}/>
+            <Route path='/favorites' element={<Favorites />}/>
          </Routes>
       </div>
    );
